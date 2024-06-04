@@ -44,7 +44,8 @@ class ActorCritic(nn.Module):
         x = F.dropout(F.elu(out), p=0.5)
 
         actor_logits = self.actor(x)
-        actor_logits[1 - act_mask] = -999999.0
+        act_mask = act_mask.bool()
+        actor_logits[~act_mask] = -999999.0
         act_probs = F.softmax(actor_logits, dim=-1)  # Tensor of [bs, act_dim]
 
         state_values = self.critic(x)  # Tensor of [bs, 1]
