@@ -235,7 +235,7 @@ if __name__ == '__main__':
     parser.add_argument('--run_eval', type=boolean, default=True, help='Run evaluation?')
     args = parser.parse_args()
 
-    os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
+    # os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
     args.device = torch.device('cuda:0') if torch.cuda.is_available() else 'cpu'
 
     args.log_dir = TMP_DIR[args.dataset] + '/' + args.name
