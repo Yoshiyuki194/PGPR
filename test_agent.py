@@ -21,6 +21,8 @@ from kg_env import BatchKGEnvironment
 from train_agent import ActorCritic
 from utils import *
 
+import time
+
 
 def evaluate(topk_matches, test_user_products):
     """Compute metrics for predicted recommendations.
@@ -210,8 +212,10 @@ def test(args):
     train_labels = load_labels(args.dataset, 'train')
     test_labels = load_labels(args.dataset, 'test')
 
+    start_time = time.time()
     if args.run_path:
         predict_paths(policy_file, path_file, args)
+        logger.info('Total path prediction time: {:.2f} seconds'.format(time.time() - start_time))
     if args.run_eval:
         evaluate_paths(path_file, train_labels, test_labels)
 
