@@ -15,6 +15,8 @@ from knowledge_graph import KnowledgeGraph
 from kg_env import BatchKGEnvironment
 from utils import *
 
+import time
+
 logger = None
 
 SavedAction = namedtuple('SavedAction', ['log_prob', 'value'])
@@ -140,6 +142,8 @@ def train(args):
     total_losses, total_plosses, total_vlosses, total_entropy, total_rewards = [], [], [], [], []
     step = 0
     model.train()
+
+    start_time = time.time()
     for epoch in range(1, args.epochs + 1):
         ### Start epoch ###
         dataloader.reset()
@@ -188,6 +192,9 @@ def train(args):
         policy_file = '{}/policy_model_epoch_{}.ckpt'.format(args.log_dir, epoch)
         logger.info("Save model to " + policy_file)
         torch.save(model.state_dict(), policy_file)
+    
+    end_time = time.time()
+    logger.info('Total training time: {:.2f} seconds'.format(end_time - start_time))
 
 
 def main():
