@@ -215,7 +215,7 @@ def test(args):
     start_time = time.time()
     if args.run_path:
         predict_paths(policy_file, path_file, args)
-        logger.info('Total path prediction time: {:.2f} seconds'.format(time.time() - start_time))
+        print('Total path prediction time: {:.2f} seconds'.format(time.time() - start_time))
     if args.run_eval:
         evaluate_paths(path_file, train_labels, test_labels)
 
